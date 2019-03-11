@@ -16,4 +16,11 @@ it 'raises error if balance exceeds £90' do
   expect{subject.top_up(91)}.to raise_error 'Max limit £90'
 end
 
+it {is_expected.to respond_to(:deduct).with(1).argument }
+
+it "deducts the fare from oyster balance for the journey" do
+  subject.top_up(20)
+  expect(subject.deduct(3)).to eq 17
+end
+
 end

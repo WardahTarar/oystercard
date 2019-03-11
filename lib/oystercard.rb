@@ -7,12 +7,17 @@ class Oyster
 
   def top_up(amount)
     limit = 90
-    new_balance = @balance += amount
-    if new_balance > 90
+    @balance += amount
+    if @balance > 90
       fail 'Max limit £90'
     else 
-      new_balance
+      @balance
     end
   end
+
+  def deduct(fare)
+    @balance -= fare
+  end
+    
 
 end
