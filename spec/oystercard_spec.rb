@@ -43,10 +43,16 @@ it 'raises error if touch in is called whilst balance < 1' do
   expect{subject.touch_in}.to raise_error 'Minimum balance of £1 required'
 end
 
-it "deducts minimum fare on touch out" do
+# it "deducts minimum fare on touch out" do
+#   subject.top_up(10)
+#   subject.touch_in
+#   expect(subject.touch_out).to eq 9
+# end
+
+it 'deducts minimum fare on touch out' do
   subject.top_up(10)
   subject.touch_in
-  expect(subject.touch_out).to eq 9
+  expect {subject.touch_out}.to change{subject.balance}.by (-1)
 end
 
 end
