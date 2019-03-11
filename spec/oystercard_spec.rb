@@ -28,13 +28,19 @@ it {is_expected.to respond_to(:touch_out)}
 it {is_expected.to respond_to(:in_journey?)}
 
 it "calling touch_in updates in_journey to true" do
+  subject.top_up(10)
   subject.touch_in
   expect(subject.in_journey?).to eq true
 end
 
 it "calling touch_out updates in_journey to false" do
+  subject.top_up(10)
   subject.touch_out
   expect(subject.in_journey?).to eq false
+end
+
+it 'raises error if touch in is called whilst balance < 1' do
+  expect{subject.touch_in}.to raise_error 'Minimum balance of £1 required'
 end
 
 end

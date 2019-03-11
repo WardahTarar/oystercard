@@ -20,6 +20,7 @@ class Oyster
   end
     
   def touch_in
+    fail 'Minimum balance of £1 required' if @balance < 1
     @journey_status = true
   end
 
@@ -31,4 +32,7 @@ class Oyster
     @journey_status
   end
 
+  # def minimum_balance?
+  #   @balance < 1
+  # end
 end
