@@ -16,12 +16,12 @@ it 'raises error if balance exceeds £90' do
   expect{subject.top_up(91)}.to raise_error 'Max limit £90'
 end
 
-it {is_expected.to respond_to(:deduct).with(1).argument }
+#  it {is_expected.to respond_to(:deduct).with(1).argument }
 
-it "deducts the fare from oyster balance for the journey" do
-  subject.top_up(20)
-  expect(subject.deduct(3)).to eq 17
-end
+# it "deducts the fare from oyster balance for the journey" do
+#   subject.top_up(20)
+#   expect(subject.deduct(3)).to eq 17
+# end
 
 it {is_expected.to respond_to(:touch_in)}
 it {is_expected.to respond_to(:touch_out)}
@@ -41,6 +41,12 @@ end
 
 it 'raises error if touch in is called whilst balance < 1' do
   expect{subject.touch_in}.to raise_error 'Minimum balance of £1 required'
+end
+
+it "deducts minimum fare on touch out" do
+  subject.top_up(10)
+  subject.touch_in
+  expect(subject.touch_out).to eq 9
 end
 
 end

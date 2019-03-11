@@ -15,9 +15,9 @@ class Oyster
     end
   end
 
-  def deduct(fare)
-    @balance -= fare
-  end
+   # def deduct(fare)
+   #  @balance -= fare
+   # end
     
   def touch_in
     fail 'Minimum balance of £1 required' if minimum_balance?
@@ -26,6 +26,7 @@ class Oyster
 
   def touch_out
     @journey_status = false
+    @balance -= 1
   end
 
   def in_journey?
@@ -35,5 +36,5 @@ class Oyster
   def minimum_balance?
     @balance < 1
   end
-  
+
 end
