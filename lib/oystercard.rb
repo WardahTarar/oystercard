@@ -24,6 +24,7 @@ class Oyster
   end
 
   def touch_out
+    @journey_status = false
   end
 
   def in_journey?

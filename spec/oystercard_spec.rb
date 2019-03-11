@@ -32,4 +32,9 @@ it "calling touch_in updates in_journey to true" do
   expect(subject.in_journey?).to eq true
 end
 
+it "calling touch_out updates in_journey to false" do
+  subject.touch_out
+  expect(subject.in_journey?).to eq false
+end
+
 end
