@@ -8,8 +8,8 @@ end
 
 it {is_expected.to respond_to(:top_up).with(1).argument }
 
-# it "checks the top up amount added to balance" do
-#   expect(subject.top_up(100)).to eq 100
-# end
+it "checks the top up amount added to balance" do
+  expect(subject.top_up(100)).to eq 100
+end
 
 end
