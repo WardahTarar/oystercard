@@ -23,4 +23,8 @@ it "deducts the fare from oyster balance for the journey" do
   expect(subject.deduct(3)).to eq 17
 end
 
+it {is_expected.to respond_to(:touch_in)}
+it {is_expected.to respond_to(:touch_out)}
+it {is_expected.to respond_to(:in_journey?)}
+
 end
