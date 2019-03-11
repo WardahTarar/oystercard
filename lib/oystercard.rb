@@ -3,6 +3,7 @@ class Oyster
 
   def initialize
     @balance = 0
+    @minimum_balance = 1
   end
 
   def top_up(amount)
@@ -26,7 +27,7 @@ class Oyster
 
   def touch_out
     @journey_status = false
-    @balance -= 1
+    @balance -= @minimum_balance
   end
 
   def in_journey?
