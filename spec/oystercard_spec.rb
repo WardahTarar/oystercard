@@ -1,6 +1,8 @@
 require 'oystercard'
 
+
 describe Oyster do
+  let(:victoria) {double :station}
 
 it 'freshly initialized card has a balance of 0' do
 expect(subject.balance).to eq 0
@@ -34,7 +36,7 @@ it {is_expected.to respond_to(:in_journey?)}
 
 it "calling touch_in updates in_journey to true" do
   subject.top_up(10)
-  subject.touch_in
+  subject.touch_in(victoria)
   expect(subject.in_journey?).to eq true
 end
 
@@ -45,19 +47,38 @@ it "calling touch_out updates in_journey to false" do
 end
 
 it 'raises error if touch in is called whilst balance < 1' do
-  expect{subject.touch_in}.to raise_error 'Minimum balance of £1 required'
+  expect{subject.touch_in(victoria)}.to raise_error 'Minimum balance of £1 required'
 end
 
-# it "deducts minimum fare on touch out" do
-#   subject.top_up(10)
-#   subject.touch_in
-#   expect(subject.touch_out).to eq 9
-# end
+it "deducts minimum fare on touch out" do
+  subject.top_up(10)
+  subject.touch_in(victoria)
+  expect(subject.touch_out).to eq 9
+end
 
 it 'deducts minimum fare on touch out' do
   subject.top_up(10)
-  subject.touch_in
+  subject.touch_in(victoria)
   expect {subject.touch_out}.to change{subject.balance}.by (-1)
+end
+
+it 'shows us the station for oyster touch in' do
+  subject.top_up(10)
+  subject.touch_in(victoria)
+  expect {subject.touch_out}.to change{subject.balance}.by (-1)
+end
+
+it 'card remembers touch in station' do
+  subject.top_up(10)
+  subject.touch_in(victoria)
+  expect(subject.entry_station).to eq victoria
+end
+
+it 'card forgets the entry station on touch out' do
+  subject.top_up(10)
+  subject.touch_in(victoria)
+  subject.touch_out
+  expect(subject.entry_station).to eq nil
 end
 
 end

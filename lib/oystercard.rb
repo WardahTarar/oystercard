@@ -1,9 +1,11 @@
 class Oyster
   attr_accessor :balance
+  attr_reader :entry_station
 
   def initialize
     @balance = 0
     @minimum_fare = 1
+    @entry_station = nil
   end
 
   def top_up(amount)
@@ -16,18 +18,20 @@ class Oyster
     end
   end
     
-  def touch_in
+  def touch_in(station)
+    @entry_station = station
     fail 'Minimum balance of £1 required' if minimum_balance?
-    @journey_status = true
+    # in_journey?
   end
 
   def touch_out
-    @journey_status = false
+    @entry_station = nil
     deduct(@minimum_fare)
   end
 
   def in_journey?
-    @journey_status
+    !@entry_station.nil? 
+    # @journey_status
   end
 
   def minimum_balance?
