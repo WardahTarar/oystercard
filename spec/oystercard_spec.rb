@@ -3,6 +3,7 @@ require 'oystercard'
 
 describe Oyster do
     let(:victoria) {double :station}
+    let(:waterloo) {double :station}
 
     it 'freshly initialized card has a balance of 0' do
   expect(subject.balance).to eq 0
@@ -42,7 +43,7 @@ describe Oyster do
 
   it "calling touch_out updates in_journey to false" do
     subject.top_up(10)
-    subject.touch_out
+    subject.touch_out(waterloo)
     expect(subject.in_journey?).to eq false
   end
 
@@ -53,19 +54,19 @@ describe Oyster do
   it "deducts minimum fare on touch out" do
     subject.top_up(10)
     subject.touch_in(victoria)
-    expect(subject.touch_out).to eq 9
+    expect(subject.touch_out(waterloo)).to eq 9
   end
 
   it 'deducts minimum fare on touch out' do
     subject.top_up(10)
     subject.touch_in(victoria)
-    expect {subject.touch_out}.to change{subject.balance}.by (-1)
+    expect {subject.touch_out(waterloo)}.to change{subject.balance}.by (-1)
   end
 
   it 'shows us the station for oyster touch in' do
     subject.top_up(10)
     subject.touch_in(victoria)
-    expect {subject.touch_out}.to change{subject.balance}.by (-1)
+    expect {subject.touch_out(waterloo)}.to change{subject.balance}.by (-1)
   end
 
   it 'card remembers touch in station' do
@@ -77,11 +78,19 @@ describe Oyster do
   it 'card forgets the entry station on touch out' do
     subject.top_up(10)
     subject.touch_in(victoria)
-    subject.touch_out
+    subject.touch_out(waterloo)
     expect(subject.entry_station).to eq nil
   end
 
   it "checks that oyster card has an empty list of journeys by default" do
     expect(subject.journey_history).to eq []
   end
+
+  it 'card forgets the entry station on touch out' do
+    subject.top_up(10)
+    subject.touch_in(victoria)
+    subject.touch_out(waterloo)
+    expect(subject.exit_station).to eq waterloo
+  end
+
 end
