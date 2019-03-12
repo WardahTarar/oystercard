@@ -1,8 +1,9 @@
 class Oyster
   attr_accessor :balance
-  attr_reader :entry_station
+  attr_reader :entry_station, :journey_history
 
   def initialize
+    @journey_history = []
     @balance = 0
     @minimum_fare = 1
     @entry_station = nil
