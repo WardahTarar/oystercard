@@ -1,12 +1,11 @@
 require 'oystercard'
 
-
 describe Oyster do
     let(:victoria) {double :station}
     let(:waterloo) {double :station}
 
-    it 'freshly initialized card has a balance of 0' do
-  expect(subject.balance).to eq 0
+  it 'freshly initialized card has a balance of 0' do
+    expect(subject.balance).to eq 0
   end
 
   it {is_expected.to respond_to(:top_up).with(1).argument }
@@ -75,12 +74,12 @@ describe Oyster do
     expect(subject.entry_station).to eq victoria
   end
 
-  it 'card forgets the entry station on touch out' do
-    subject.top_up(10)
-    subject.touch_in(victoria)
-    subject.touch_out(waterloo)
-    expect(subject.entry_station).to eq nil
-  end
+  # it 'card forgets the entry station on touch out' do
+  #   subject.top_up(10)
+  #   subject.touch_in(victoria)
+  #   subject.touch_out(waterloo)
+  #   expect(subject.entry_station).to eq nil
+  # end
 
   it "checks that oyster card has an empty list of journeys by default" do
     expect(subject.journey_history).to eq []
@@ -93,4 +92,10 @@ describe Oyster do
     expect(subject.exit_station).to eq waterloo
   end
 
+  it 'stores a journey history into a hash' do
+    subject.top_up(10)
+    subject.touch_in(victoria)
+    subject.touch_out(waterloo)
+    expect(subject.adding_journey).to eq [{entry: victoria, exit: waterloo}]
+  end
 end

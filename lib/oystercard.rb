@@ -1,6 +1,6 @@
 class Oyster
-  attr_accessor :balance
-  attr_reader :entry_station, :journey_history, :exit_station
+  attr_accessor :balance, :journey_history
+  attr_reader :entry_station, :exit_station
 
   def initialize
     @journey_history = []
@@ -27,9 +27,10 @@ class Oyster
   end
 
   def touch_out(station)
-    @entry_station = nil
     @exit_station = station
     deduct(@minimum_fare)
+    # @journey_history << {entry: @entry_station, exit: @exit_station}
+    # @journey_history
   end
 
   def in_journey?
@@ -41,10 +42,14 @@ class Oyster
     @balance < 1
   end
 
+  def adding_journey
+    @journey_history << {entry: @entry_station, exit: @exit_station}
+  end
+
   private
 
-   def deduct(minimum_fare)
+  def deduct(minimum_fare)
     @balance -= @minimum_fare
-   end
+  end
 
-end
+  end
