@@ -8,11 +8,11 @@ class Oyster
 
   def top_up(amount)
     limit = 90
-    @balance += amount
-    if @balance > 90
+    total = @balance + amount
+    if total > limit
       fail 'Max limit £90'
     else 
-      @balance
+      @balance += amount
     end
   end
     
