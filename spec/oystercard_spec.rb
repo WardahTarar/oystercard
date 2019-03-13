@@ -98,4 +98,5 @@ describe Oyster do
     subject.touch_out(waterloo)
     expect(subject.adding_journey).to eq [{entry: victoria, exit: waterloo}]
   end
+  
 end
